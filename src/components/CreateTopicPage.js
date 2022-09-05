@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../config'
 
 const CreateTopicPage = () => {
   const [resStatus, setResStatus] = useState('')
@@ -48,7 +49,7 @@ const CreateTopicPage = () => {
 
     try {
       console.log(body)
-      const res = await axios.post('https://readit-project.herokuapp.com/topic', body)
+      const res = await axios.post(`${API_URL}/topic`, body)
       setResStatus(res)
       navigate('/topic')
     } catch (error){

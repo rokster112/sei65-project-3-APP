@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import placeholder from '../styles/images/No-image.png'
+import { API_URL } from '../config'
 
 // Import Bootstrap Components
 import Loading from './Loading'
@@ -22,9 +23,9 @@ const Home = () => {
       try {
 
  
-        const { data: latestTopic } = await axios.get('https://readit-project.herokuapp.com/latest-topic')
-        const { data: mostComments } = await axios.get('https://readit-project.herokuapp.com/highest-comment')
-        const { data: mostLikes } = await axios.get('https://readit-project.herokuapp.com/most-likes')
+        const { data: latestTopic } = await axios.get(`${API_URL}/latest-topic`)
+        const { data: mostComments } = await axios.get(`${API_URL}/highest-comment`)
+        const { data: mostLikes } = await axios.get(`${API_URL}/most-likes`)
         setTopics([...topics, { ...latestTopic, title: 'Latest Topic' }, { ...mostComments, title: 'Most Comments' }, { ...mostLikes, title: 'Most Likes' }])
       } catch (errors) {
         console.log(errors)

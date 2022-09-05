@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 const Register = () => {
 
@@ -24,7 +25,7 @@ const Register = () => {
     e.preventDefault()
   
     try {
-      const res = await axios.post('https://readit-project.herokuapp.com/register', registerData)
+      const res = await axios.post(`${API_URL}/register`, registerData)
       navigate('/login')
     } catch (error) {
       console.log(error)

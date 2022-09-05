@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import placeholder from '../styles/images/No-image.png'
+import { API_URL } from '../config'
 
 // Import Bootstrap Components
 import Loading from './Loading'
@@ -33,7 +34,7 @@ const TopicPage = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const { data } = await axios.get('https://readit-project.herokuapp.com/topic')
+        const { data } = await axios.get(`${API_URL}/topic`)
         setTopic(data)
       } catch (error) {
         console.log(error)
@@ -48,7 +49,7 @@ const TopicPage = () => {
       
       console.log(localStorage.getItem('userName'))
       const body = { like: firstLike + 1 }
-      const res = await axios.put(`https://readit-project.herokuapp.com/topic/${Id}`, body)
+      const res = await axios.put(`${API_URL}/topic${Id}`, body)
       setResStatus(body)
       console.log(res.data.message)
     } catch (error){
@@ -60,7 +61,7 @@ const TopicPage = () => {
       
       console.log(localStorage.getItem('userName'))
       const body = { dislike: firstLike + 1 }
-      const res = await axios.put(`https://readit-project.herokuapp.com/topic/${Id}`, body)
+      const res = await axios.put(`${API_URL}/topic${Id}`, body)
       setResStatus(body)
       console.log(res.data.message)
     } catch (error){

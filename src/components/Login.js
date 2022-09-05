@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
+import { API_URL } from '../config'
 
 
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault()
   
     try {
-      const res = await axios.post('https://readit-project.herokuapp.com/login', loginData)
+      const res = await axios.post(`${API_URL}/login`, loginData)
       const { token } = res.data
       localStorage.setItem('token', token)
       localStorage.setItem('userName', loginData.userName)
