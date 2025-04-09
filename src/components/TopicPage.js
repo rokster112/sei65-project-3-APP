@@ -17,8 +17,6 @@ const TopicPage = () => {
     setSearch(event.target.value)
   }
 
-  console.log('API_URL:', API_URL)
-
   useEffect(() => {
     if (Array.isArray(topic)) {
       const regexSearch = new RegExp(search, 'i')

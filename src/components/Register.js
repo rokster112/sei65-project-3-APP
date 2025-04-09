@@ -16,8 +16,6 @@ const Register = () => {
   
   const [ errors, setErrors ] = useState(false)
 
-  console.log('API URL:', API_URL)
-
   
   const handleChange = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value })
