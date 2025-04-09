@@ -74,7 +74,6 @@ const CommentPage = () => {
 
   const updateDocument = async (single, commentId) => {
     const body = { text: updateInput }
-    console.log(body, single, commentId)
     try { 
       const res = await axios.put(`${API_URL}/comment/${single}/${commentId}`, body)
       setResStatus(res)
