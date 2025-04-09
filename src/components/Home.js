@@ -49,20 +49,25 @@ const Home = () => {
       <div className="topic-container">
         <div>
           {Object.values(topics).length > 0 
-            ? 
-            Object.values(topics).map((topic, index) => (
-              <div key = {index}>
+            ? Object.values(topics).map((topic, index) => (
+              <div key={index}>
                 <div className="home-title">{topic.title}</div>
-                <div key={topic[0]._id} className="topic">
+                <div key={topic._id} className="topic">
                   <div className="topic-text">
-                    <Link to ={`/topic/${topic[0]._id}`}>
-                      <div className="topic-date">{topic[0].topicUser} Added on: {topic[0].createdAt.split('T')[0]} at: {topic[0].createdAt.split('T')[1].split('.')[0]}</div>
-                      <div className="title">{topic[0].topic}</div>
-                      <div className="description">{topic[0].description}</div>
+                    <Link to={`/topic/${topic._id}`}>
+                      {/* Handle the case where createdAt is missing */}
+                      <div className="topic-date">
+                        {topic.topicUser} Added on: 
+                        {topic.createdAt ? 
+                          `${topic.createdAt.split('T')[0]} at ${topic.createdAt.split('T')[1].split('.')[0]}` 
+                          : 'Date not available'}
+                      </div>
+                      <div className="title">{topic.topic}</div>
+                      <div className="description">{topic.description}</div>
                     </Link>
                   </div>
                   <div className="topic-image">
-                    <img className="image" src={topic[0].imageUrl ? topic[0].imageUrl : placeholder}></img>
+                    <img className="image" src={topic.imageUrl ? topic.imageUrl : placeholder} alt="Topic"/>
                   </div>        
                 </div>
               </div>
@@ -77,6 +82,7 @@ const Home = () => {
       </div>
     </>
   )
+  
 }
 
 export default Home
