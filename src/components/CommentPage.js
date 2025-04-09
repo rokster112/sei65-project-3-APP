@@ -95,7 +95,6 @@ const CommentPage = () => {
       setResStatus({ status: 'WrongToken' })
       return false
     }
-    console.log(localStorage.getItem('userName'))
     return true
   }
 
@@ -131,12 +130,9 @@ const CommentPage = () => {
   }
   const likeTopic = async (Id, firstLike) => {
     try {
-      
-      console.log(localStorage.getItem('userName'))
       const body = { like: firstLike + 1 }
       const res = await axios.put(`${API_URL}/topic/${Id}`, body)
       setResStatus(body)
-      console.log(res.data.message)
     } catch (error){
       console.log(error)
     }
@@ -144,16 +140,13 @@ const CommentPage = () => {
   const dislikeTopic = async (Id, firstLike) => {
     try {
       
-      console.log(localStorage.getItem('userName'))
       const body = { dislike: firstLike + 1 }
       const res = await axios.put(`${API_URL}/topic/${Id}`, body)
       setResStatus(body)
-      console.log(res.data.message)
     } catch (error){
       console.log(error)
     }
   }
-  console.log(data)
 
   return (
     <div className="comment-view">

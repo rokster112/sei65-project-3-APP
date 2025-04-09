@@ -8,80 +8,78 @@ import { API_URL } from '../config'
 import Loading from './Loading'
 
 const Home = () => {
-  const [topics, setTopics] = useState([])
-  const [errors, setErrors] = useState(false)
 
+  const [topics, setTopics ] = useState([])
+  const [ errors, setErrors ] = useState(false)
 
+  // ! Executed
   useEffect(() => {
     const getData = async () => {
       try {
-        const [latestRes, commentsRes, likesRes] = await Promise.all([
-          axios.get(`${API_URL}/latest-topic`),
-          axios.get(`${API_URL}/highest-comment`),
-          axios.get(`${API_URL}/most-likes`)
-        ])
 
-        const featuredTopics = [
-          { ...latestRes.data, _metaTitle: 'Latest Topic' },
-          { ...commentsRes.data, _metaTitle: 'Most Comments' },
-          { ...likesRes.data, _metaTitle: 'Most Likes' }
-        ]
-
-        setTopics(featuredTopics)
-      } catch (error) {
-        console.error('Error fetching featured topics:', error)
+ 
+        const { data: latestTopic } = await axios.get(`${API_URL}/latest-topic`)
+        const { data: mostComments } = await axios.get(`${API_URL}/highest-comment`)
+        const { data: mostLikes } = await axios.get(`${API_URL}/most-likes`)
+        setTopics([{ ...latestTopic, title: 'Latest Topic' }, { ...mostComments, title: 'Most Comments' }, { ...mostLikes, title: 'Most Likes' }])
+      } catch (errors) {
+        console.log(errors)
         setErrors(true)
       }
     }
-
     getData()
   }, [])
+
+  useEffect(() => {
+    console.log('topics', topics)
+  }, [topics])
+
+  const trendingTopics = topics.map((topic, index) => {
+    let count = 0
+    if (count <= topics.length - 1) {
+      return (
+        <>
+          <p style={{ textAlign: 'center' }}>{topic.title}</p>
+          <div key={index}>
+            <div className="home-title">{topic[count].title}</div>
+            <div key={topic[count]._id} className="topic">
+              <div className="topic-text">
+                <Link to={`/topic/${topic[count]._id}`}>
+                  <div className="topic-date">
+                    {topic[count].topicUser} Added on: 
+                    {topic[count].createdAt.split('T')[0]} at {topic[count].createdAt.split('T')[1].split('.')[0]} 
+                  </div>
+                  <div className="title">{topic[count].topic}</div>
+                  <div className="description">{topic[count].description}</div>
+                </Link>
+              </div>
+              <div className="topic-image">
+                <img className="image" src={topic[count].imageUrl ? topic[count].imageUrl : placeholder} alt="Topic"/>
+              </div>   
+            </div>
+          </div>
+        </>)
+    }
+    count ++
+    
+  })
+
 
   return (
     <>
       <div className="topic-div">
-        <h1 className="text-center">Welcome!</h1>
-        <p className="text-center">Check out our featured topics below</p>
+        <h1 className="text-center"> Welcome!</h1>
       </div>
-
       <div className="topic-container">
-        {topics.length > 0 ? (
-          topics.map((topic, index) => (
-            <div key={index} className="topic-block">
-              <div className="home-title">{topic._metaTitle}</div>
-              <div className="topic">
-                <div className="topic-text">
-                  <Link to={`/topic/${topic._id}`}>
-                    <div className="topic-date">
-                      {topic.topicUser} Added on:{' '}
-                      {topic.createdAt
-                        ? `${topic.createdAt.split('T')[0]} at ${topic.createdAt
-                          .split('T')[1]
-                          .split('.')[0]}`
-                        : 'Date not available'}
-                    </div>
-                    <div className="title">{topic.topic}</div>
-                    <div className="description">{topic.description}</div>
-                  </Link>
-                </div>
-                <div className="topic-image">
-                  <img
-                    className="image"
-                    src={topic.imageUrl || placeholder}
-                    alt="Topic"
-                  />
-                </div>
-              </div>
-            </div>
-          ))
-        ) : errors ? (
-          <h2 className="text-center">Something went wrong. Please try again later.</h2>
-        ) : (
-          <Loading />
-        )}
+        <div>
+          {topics.length > 0 ? 
+            trendingTopics
+            : <Loading />}
+        </div>
       </div>
     </>
   )
+  
 }
 
 export default Home
