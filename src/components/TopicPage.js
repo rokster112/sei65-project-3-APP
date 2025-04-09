@@ -33,6 +33,7 @@ const TopicPage = () => {
     const getData = async () => {
       try {
         const { data } = await axios.get(`${API_URL}/topic`)
+        console.log('API_URL:', await axios.get(`${API_URL}/topic`))
         setTopic(Array.isArray(data) ? data : []) 
       } catch (error) {
         console.log(error)
