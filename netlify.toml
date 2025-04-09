@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/sei65-project-3-api-production/*"
+  to = "https://sei65-project-3-api-production.up.railway.app/:splat"
+  status = 200
+  force = true
