@@ -28,7 +28,7 @@ const Register = () => {
     e.preventDefault()
   
     try {
-      const res = await axios.post(`${API_URL}/register`, registerData)
+      const res = await axios.post('sei65-project-3-api-production.up.railway.app/register', registerData)
       navigate('/login')
     } catch (error) {
       console.log(error)
